@@ -1,0 +1,7 @@
+.idea/
+*.log
+*.temp
+Config/
+.DS_Store
+
+setup.py
