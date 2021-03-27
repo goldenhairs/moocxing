@@ -1,14 +1,12 @@
 # MOOCXING v0.7.6 使用文档
 
-[toc]
-
 ### 描述
 
 当前最新版本0.7.6  [github链接](https://github.com/Aanzhi/moocxing )
 
 python版本需>=3.8，不兼容<=3.7
 
-**[moocxing工具包](/moocxing工具包)，收集了所需的python安装包，pyaudio离线安装包，wget，ffmpeg。**
+**[moocxing工具包](http://sliot.top:7505/moocxing工具包)，收集了所需的python安装包，pyaudio离线安装包，wget，ffmpeg。**
 
 
 
