@@ -2,6 +2,7 @@ from abc import ABCMeta, abstractmethod
 
 
 class AbstractPlugin(metaclass=ABCMeta):
+    IS_IMMERSIVE = False
 
     def __init__(self, SKILL):
         self._SKILL = {**{"media": None, 
@@ -9,19 +10,17 @@ class AbstractPlugin(metaclass=ABCMeta):
                           "nlp": None,
                           "mqtt": None, 
                           "serial": None, 
-                          "thread": None,
                           "pinyin": None, 
-                          "minecraft": None,
-                          "analysis": None}, **SKILL}
+                          "mc": None}, **SKILL}
 
         self.media = self._SKILL["media"]
         self.speech = self._SKILL["speech"]
         self.nlp = self._SKILL["nlp"]
         self.mqtt = self._SKILL["mqtt"]
         self.serial = self._SKILL["serial"]
-        self.thread = self._SKILL["thread"]
         self.pinyin = self._SKILL["pinyin"]
-        self.mc = self._SKILL["minecraft"]
+        self.mc = self._SKILL["mc"]
+
 
     def say(self, text):
         self.speech.TTS(text)

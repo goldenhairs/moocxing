@@ -1,16 +1,21 @@
 import pkgutil
 from moocxing.robot import Constants
 
+import logging
+
+log = logging.getLogger(__name__)
 
 def loadPlugin(SKILL):
-    _plugins_query = []
-    nameSet = set()
+    plugins = []
+    chat = None
     locations = [
-        Constants.PLUGIN_PATH
+        Constants.PLUGIN_PATH,
+        Constants.CUSTOM_PLUGIN_PATH
     ]
 
     for finder, name, ispkg in pkgutil.walk_packages(locations):
         loader = finder.find_module(name)
+
         mod = loader.load_module(name)
 
         if not hasattr(mod, 'Plugin'):
@@ -18,11 +23,16 @@ def loadPlugin(SKILL):
 
         plugin = mod.Plugin(SKILL)
 
-        if plugin.SLUG in nameSet:
+        if plugin in plugins:
             continue
 
-        nameSet.add(plugin.SLUG)
-        _plugins_query.append(plugin)
-        print(f"{plugin.SLUG}插件加载成功")
+        if plugin.SLUG == "chat":
+            chat = plugin
+        else:
+            plugins.append(plugin)
 
-    return _plugins_query
+
+        log.info("-"*35)
+        log.info(f"插件加载成功 {plugin.SLUG}")
+
+    return plugins,chat

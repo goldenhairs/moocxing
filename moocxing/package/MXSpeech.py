@@ -1,6 +1,7 @@
 import ffmpeg
 from aip.speech import AipSpeech
 from moocxing.robot import Config
+from moocxing.robot import Constants
 import logging
 
 log = logging.getLogger(__name__)
@@ -14,14 +15,14 @@ class MXSpeech:
         """文本转语音"""
         result = self.client.synthesis(text, 'zh', 4, {'vol': 5, 'per': 4, })
         if not isinstance(result, dict):
-            with open('back.mp3', 'wb') as f:
+            with open(Constants.TEMP_PATH + 'back.mp3', 'wb') as f:
                 f.write(result)
 
-        ffmpeg.run(ffmpeg.output(ffmpeg.input('back.mp3'), 'back.wav'), quiet=True, overwrite_output=True)
+        ffmpeg.run(ffmpeg.output(ffmpeg.input(Constants.TEMP_PATH + 'back.mp3'), Constants.TEMP_PATH + 'back.wav'), quiet=True, overwrite_output=True)
 
     def STT(self, fname="back.wav", _print=False):
         """语音转文本"""
-        with open(fname, 'rb') as fp:
+        with open(Constants.TEMP_PATH + fname, 'rb') as fp:
             data = fp.read()
 
         result = self.client.asr(data, 'pcm', 16000, {'dev_pid': 1537, })

@@ -1,14 +1,15 @@
 import requests
-from moocxing.plugins.sdk import AbstractPlugin
-
+from moocxing.plugins.sdk.AbstractPlugin import AbstractPlugin
+from moocxing.robot import Config
 
 class Plugin(AbstractPlugin):
     SLUG = "weather"
 
     def handle(self, query):
-        city = self.nlp.getCity(query)
+        if (city := self.nlp.getCity(query)) is None:
+            city = Config.get('heweather/city')
 
-        url = "https://free-api.heweather.net/s6/weather?location=" + city + "&key=3bffba48276c408b9107e275a51f111e"
+        url = f"https://free-api.heweather.net/s6/weather?location={city}&key={Config.get('heweather/key')}" 
         res = requests.post(url)
         info = dict(res.json())
         try:

@@ -1,23 +1,7 @@
-baidu:
-  APP_ID: '22929503'
-  API_KEY: 'WresMkF1o4342KeqZBOsjXId'
-  SECRET_KEY: 'BrDOj5quiTuhwxpULsVzWdw5nmcyrTIl'
-
-mqtt:
-  host: "mqtt.16302.com"
-  post: 1883
-
+loglevel: 20
 minecraft:
-  host: "localhost"
+  host: localhost
   post: 4711
-
-level:
-  - &CRITICAL 50
-  - &ERROR 40
-  - &WARNING 30
-  - &INFO 20
-  - &DEBUG 10
-  - &NOTSET 0
-
-loglevel: *INFO
-
+mqtt:
+  host: mqtt.16302.com
+  post: 1883

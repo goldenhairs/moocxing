@@ -1,4 +1,4 @@
-from moocxing.plugins.sdk import AbstractPlugin
+from moocxing.plugins.sdk.AbstractPlugin import AbstractPlugin
 
 
 class Plugin(AbstractPlugin):

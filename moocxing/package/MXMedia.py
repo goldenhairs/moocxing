@@ -82,7 +82,7 @@ class MXMedia:
         log.info("* 结束播放>>>>>>")
 
     def playThread(self, path="back.wav"):
-        Thread(target=self.play, args=(Constants.TEMP_PATH + path,)).start()
+        Thread(target=self.play, args=(path,)).start()
 
     def stop(self):
         self._stop = True

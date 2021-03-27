@@ -1,9 +1,9 @@
-from moocxing.plugins.sdk import AbstractPlugin
+from moocxing.plugins.sdk.AbstractPlugin import AbstractPlugin
 import time
 
 
 class Plugin(AbstractPlugin):
-    SLUG = "time"
+    SLUG = "isTime"
 
     def handle(self, query):
         if any(word in query for word in ["时间", "几点"]):
