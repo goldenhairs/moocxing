@@ -1,7 +1,0 @@
-loglevel: 20
-minecraft:
-  host: localhost
-  post: 4711
-mqtt:
-  host: mqtt.16302.com
-  post: 1883
