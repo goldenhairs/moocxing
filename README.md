@@ -1,30 +1,43 @@
 # MOOCXING v0.7.6 使用文档
 
+[toc]
+
 ### 描述
 
-当前最新版本0.7.6  [github链接](https://github.com/Aanzhi/moocxing )
+当前最新版本0.7.6  [github链接](https://github.com/Aanzhi/moocxing )  [最新文档](http://sliot.top:7505/)
 
-python版本需>=3.8，不兼容<=3.7
+[python](https://www.python.org/)版本需>=3.8，不兼容<=3.7
 
-**[moocxing工具包](http://sliot.top:7505/moocxing工具包)，收集了所需的python安装包，pyaudio离线安装包，wget，ffmpeg。**
+**(推荐) [moocxing工具包](http://sliot.top:7505/tools.html)，收集了所需的python安装包，pyaudio离线版，moocxing离线版，wget，ffmpeg。**
 
 
 
 ### 1. 安装与配置
 
-**安装**
+因为python>=3.8，会出现pyaudio安装失败的提示，所以需要手动下载与**python版本对应的pyaudio的函数库**进行安装。
+
+[pyaudio下载链接](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio)
+
+**安装pyaudio离线版**
 
 ```shell
-$ pip3 install moocxing
+$ pip3 install PyAudio‑0.2.11‑cp38‑cp38‑win_amd64.whl
 ```
 
-python>=3.8需要手动安装[pyaudio](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio)，pyaudio版本与python版本对应
+**安装moocxing**
+
+```shell
+# 安装在线版本
+$ pip3 install moocxing
+# 安装离线版本
+$ pip3 install moocxing-0.7.6-py3-none-any.whl
+```
 
 
 
 **配置wget和ffmpeg到环境变量**
 
-window 需手动下载[wget](https://eternallybored.org/misc/wget/)和[ffmpeg](https://www.gyan.dev/ffmpeg/builds/)。
+window 需手动下载[wget](https://eternallybored.org/misc/wget/)和[ffmpeg](https://www.gyan.dev/ffmpeg/builds/)，并配置环境变量。
 
 macOS  只需安装wget。
 
@@ -60,9 +73,9 @@ from moocxing.package import MOOCXING
 
 配置文件读取顺序 **`config.yaml` > `default.yaml`**， `config.yaml`中的参数将会覆盖`default.yaml`。
 
-当前可配置的全部参数如下：
+**当前可配置的全部参数如下：**
 
-`default.yaml`以下内容为自动生成的默认参数
+`default.yaml`以下内容为自动生成的默认配置。
 
 ```python
 # 日志等级
@@ -79,7 +92,7 @@ mqtt:
   post: 1883
 ```
 
-`config.yaml`以下内容为用户自定义
+`config.yaml`以下内容为用户自定义，可覆盖默认配置。
 
 其中`loglevel`参数将覆盖`default.yaml`中的`loglevel`参数。
 
@@ -138,11 +151,11 @@ mc = mx.initMinecraft()
 
 
 
-### 3. 模块介绍
+### 3. 模块介绍<span id = "model"> </span>
 
-moocxing目前有七个功能模块。
+moocxing目前有七个功能模块。[Media](#media)  [Speech](#speech)  [NLP](#nlp)  [Mqtt](#mqtt)  [Serial](#serial)  [Pinyin](#pinyin)  [Minecraft](#minecraft)
 
-<span id = "media">**Media -- 媒体模块**</span>
+<span id = "media">**Media -- 媒体模块**</span>  [返回](#model)
 
 ```python
 # 录音
@@ -170,7 +183,7 @@ unpause()
 
 
 
-<span id = "speech">**Speech -- 语音识别+语音合成模块**</span>
+<span id = "speech">**Speech -- 语音识别+语音合成模块**</span>  [返回](#model)
 
 ```python
 # 语音转文本
@@ -186,7 +199,7 @@ TTS(text)
 
 
 
-<span id = "nlp">**NLP -- NLP模块**</span>
+<span id = "nlp">**NLP -- NLP模块**</span>  [返回](#model)
 
 ```python
 # 获取词法分析的结果
@@ -207,7 +220,7 @@ getMusicName(text)
 
 
 
-<span id = "mqtt">**Mqtt -- MQTT模块**</span>
+<span id = "mqtt">**Mqtt -- MQTT模块**</span>  [返回](#model)
 
 ```python
 # 发送消息
@@ -228,7 +241,7 @@ returnMsg()
 
 
 
-<span id = "serial">**Serial -- 串口模块**</span>
+<span id = "serial">**Serial -- 串口模块**</span>  [返回](#model)
 
 ```python
 # 获取串口列表(无需实例化)
@@ -256,7 +269,7 @@ close()
 
 
 
-<span id = "pinyin">**Pinyin -- 拼音模块**</span>
+<span id = "pinyin">**Pinyin -- 拼音模块**</span>  [返回](#model)
 
 ```python
 # 获取文本的拼音
@@ -268,7 +281,7 @@ getPinyin(text, cut="")
 
 
 
-<span id = "minecraft">**Minecraft -- 我的世界模块**</span>
+<span id = "minecraft">**Minecraft -- 我的世界模块**</span>  [返回](#model)
 
 所有函数用法与mcpi函数库***用法一致***，且***无需再调用***mcpi中`create`函数来进行初始化我的世界模块。
 
@@ -484,11 +497,10 @@ serial.close()
    [pyaudio下载链接](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio)
 
    ```shell
-   $ pip3 install Downloads/PyAudio‑0.2.11‑cp38‑cp38‑win_amd64.whl
+   $ pip3 install PyAudio‑0.2.11‑cp38‑cp38‑win_amd64.whl
    ```
 
 2. python版本需>=3.8，使用了3.8的语法，不兼容<=3.7
-
 
 
 
