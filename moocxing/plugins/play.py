@@ -10,7 +10,7 @@ class Plugin(AbstractPlugin):
         elif "停止" in query:
             self.media.stop()
         elif "继续" in query:
-            self.media.go()
+            self.media.unpause()
 
     def isValid(self, query):
         return any(word in query for word in ["暂停", "停止", "继续"])

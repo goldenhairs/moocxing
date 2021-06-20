@@ -13,7 +13,8 @@ fileUtils.mkdir(Constants.CUSTOM_PLUGIN_PATH)
 DEFAULT = {
     'loglevel': 20,
     'mqtt': {'host': 'mqtt.16302.com', 'post': 1883},
-    'minecraft': {'host': 'localhost', 'post': 4711}
+    'minecraft': {'host': 'localhost', 'post': 4711},
+    'serial': {'com':'','bps': 9600},
 }
 fileUtils.mkFile(Constants.DEFAULT_CONFIG_PATH, DEFAULT)
 fileUtils.mkFile(Constants.CUSTOM_CONFIG_PATH)
@@ -29,15 +30,14 @@ def get(items):
     config = allConfig
 
     for item in items.split("/"):
-        try:
+        if isinstance(config,dict):
             config = config.get(item)
-        except:
-            config = None
-
-    if config:
-        return config
-    else:
-        log.warning(f"xxx 参数不存在：配置文件中没有找到{items}参数")
-        return None
-       
+        elif isinstance(config,list):
+            if len(config) > int(item):
+                config = config[int(item)]
+                
+    if config is None:
+        log.warning(f"xxx {items} 参数不存在")
+    return config
+   
 

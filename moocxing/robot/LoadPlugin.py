@@ -9,8 +9,8 @@ def loadPlugin(SKILL):
     plugins = []
     chat = None
     locations = [
-        Constants.PLUGIN_PATH,
-        Constants.CUSTOM_PLUGIN_PATH
+        Constants.CUSTOM_PLUGIN_PATH,
+        Constants.PLUGIN_PATH
     ]
 
     for finder, name, ispkg in pkgutil.walk_packages(locations):
@@ -34,5 +34,8 @@ def loadPlugin(SKILL):
 
         log.info("-"*35)
         log.info(f"插件加载成功 {plugin.SLUG}")
+
+    log.info("-"*35)
+    log.info("插件加载完成\n\n")
 
     return plugins,chat

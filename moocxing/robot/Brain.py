@@ -22,7 +22,7 @@ class Brain():
         
         log.info("未匹配到技能")
         if self.chat and chat:
-            log.info("已自动匹配闲聊功能")
+            log.info("已匹配闲聊功能")
             self.chat.handle("chat" + text)
 
         return False

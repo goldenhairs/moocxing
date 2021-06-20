@@ -34,7 +34,8 @@ class Plugin(AbstractPlugin):
             keyword = self.getMusicRankings()
             musicUrl = self.getMusicUrl(keyword)
 
-        os.system(f"wget {musicUrl} -O {Constants.TEMP_PATH}music.mp3")
+        os.system(f"curl -so  {Constants.TEMP_PATH}music.mp3 {musicUrl}")
+
         ffmpeg.run(ffmpeg.output(ffmpeg.input(Constants.TEMP_PATH + 'music.mp3'), Constants.TEMP_PATH + 'music.wav'), quiet=True, overwrite_output=True)
 
     def handle(self, query):

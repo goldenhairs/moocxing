@@ -1,41 +1,38 @@
 from moocxing.robot import Constants
 from moocxing.robot import Config   
+from moocxing.robot.utils import serialUtils
 import os
 import logging
 
 log = logging.getLogger(__name__)
 
-version = "v0.7.6"
+version = "v0.8.0"
 
 class MOOCXING:
     def __init__(self,config = None):
-        logging.basicConfig(level=Config.get("loglevel"), format='[%(levelname)s][%(filename)s]: %(message)s')
+        logging.basicConfig(level=Config.get("loglevel"), format='[%(levelname).4s - %(filename)s]: %(message)s')
     
     def getAllSkill(self):
         SKILL = {}
-        # 初始化播放器和录音模块
         SKILL["media"] = self.initMedia()
-        # 初始化MQTT模块
-        SKILL["mqtt"] = self.initMqtt()
-        # 初始化拼音模块
-        SKILL["pinyin"] = self.initPinyin()
-        # 初始化我的世界
-        SKILL["mc"] = self.initMinecraft()
-        # 初始化串口模块
-        SKILL["serial"] = self.initSerial()
-        # 初始化语音识别+语音合成模块
         SKILL["speech"] = self.initSpeech()
-        # 初始化NLP模块
         SKILL["nlp"] = self.initNLP()
+        SKILL["pinyin"] = self.initPinyin()
+        SKILL["mqtt"] = self.initMqtt()
+        SKILL["serial"] = self.initSerial()
+        SKILL["mc"] = self.initMinecraft()
+
+        log.info("——"*25)
+        log.info("初始化完成\n\n")
 
         return SKILL
-
 
     def initMqtt(self):
         from .MXMqtt import MXMqtt
         try:
-            log.info("="*35)
-            log.info(">>> 正在初始化 MQTT模块")
+            log.info("——"*25)
+            log.info(">>> 初始化 MQTT模块")
+            log.info(f">>> 服务器IP: {Config.get('mqtt/host')} 端口号: {Config.get('mqtt/post')}")
             return MXMqtt()
         except:
             log.warning("xxx 初始化 MQTT模块 失败")
@@ -43,17 +40,18 @@ class MOOCXING:
     def initMinecraft(self):
         from mcpi.minecraft import Minecraft
         try:
-            log.info("="*35)
-            log.info(">>> 正在初始化 Minecraft模块")
-            return Minecraft.create(Config.get("minecraft/host"), Config.get("minecraft/post"))
+            log.info("——"*25)
+            log.info(">>> 初始化 Minecraft模块")
+            log.info(f">>> 服务器IP: {Config.get('minecraft/host')} 端口号: {Config.get('minecraft/post')}")
+            return Minecraft.create(Config.get('minecraft/host'), Config.get('minecraft/post'))
         except:
             log.warning("xxx 未检测到Minecraft服务器")
 
     def initNLP(self):
         from .MXNLP import MXNLP
         try:
-            log.info("="*35)
-            log.info(">>> 正在初始化 自然语言分析模块")
+            log.info("——"*25)
+            log.info(">>> 初始化 自然语言分析模块")
             return MXNLP()
         except:
             log.warning("xxx 初始化 自然语言分析模块 失败")
@@ -61,8 +59,8 @@ class MOOCXING:
     def initSpeech(self):
         from .MXSpeech import MXSpeech
         try:
-            log.info("="*35)
-            log.info(">>> 正在初始化 语音识别/合成模块")
+            log.info("——"*25)
+            log.info(">>> 初始化 语音识别/合成模块")
             return MXSpeech()
         except:
             log.warning("xxx 初始化 语音识别/合成模块 失败")
@@ -70,8 +68,8 @@ class MOOCXING:
     def initPinyin(self):
         from .MXPinyin import MXPinyin
         try:
-            log.info("="*35)
-            log.info(">>> 正在初始化 拼音模块")
+            log.info("——"*25)
+            log.info(">>> 初始化 拼音模块")
             return MXPinyin()
         except:
             log.warning("xxx 初始化 拼音模块 失败")
@@ -79,20 +77,23 @@ class MOOCXING:
     def initMedia(self):
         from .MXMedia import MXMedia
         try:
-            log.info("="*35)
-            log.info(">>> 正在初始化 播放器模块")
+            log.info("——"*25)
+            log.info(">>> 初始化 播放器模块")
             return MXMedia()
         except:
             log.warning("xxx 初始化 播放器模块 失败")
 
-    def initSerial(self, com=None, bps=9600):
+    def initSerial(self):
         from .MXSerial import MXSerial
         try:
-            log.info("="*35)
-            log.info(">>> 正在初始化 串口通信模块")
-            if com is None:
-                return MXSerial(MXSerial.getCom(-1), bps)
+            log.info("——"*25)
+            log.info(">>> 初始化 串口通信模块")
+
+            if Config.get('serial/com'):
+                log.info(f">>> 串口号: {Config.get('serial/com')} 波特率: {Config.get('serial/bps')}")
+                return MXSerial(Config.get('serial/com'), Config.get('serial/bps'))
             else:
-                return MXSerial(com, bps)
+                log.info(f">>> 串口号: {serialUtils.getCom(-1)} 波特率: {Config.get('serial/bps')}")
+                return MXSerial(serialUtils.getCom(-1), Config.get('serial/bps'))
         except:
             log.warning("xxx 未检测到串口")
